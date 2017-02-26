@@ -268,3 +268,5 @@
 
 # Marshmallow removed Notification.setLatestEventInfo()
 -dontwarn android.app.Notification
+
+# 务必注意将Java Bean,自定义组件添加进规则
