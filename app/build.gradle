@@ -5,19 +5,38 @@ android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
     buildToolsVersion rootProject.ext.android["buildToolsVersion"]
     useLibrary 'org.apache.http.legacy'
+
     defaultConfig {
         applicationId "me.sheepyang.mvparmsdemo"
         minSdkVersion rootProject.ext.android["minSdkVersion"]
         targetSdkVersion rootProject.ext.android["targetSdkVersion"]
         versionCode rootProject.ext.android["versionCode"]
         versionName rootProject.ext.android["versionName"]
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner rootProject.ext.dependencies["androidJUnitRunner"]
     }
     buildTypes {
-        release {
-            minifyEnabled false
+
+        debug {
+            buildConfigField "boolean", "LOG_DEBUG", "true"//开启Debug模式
+            buildConfigField "boolean", "USE_CANARY", "true"//开启内存检测
+            minifyEnabled false//关闭混淆
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
+        release {
+            buildConfigField "boolean", "LOG_DEBUG", "false"//关闭Debug模式
+            buildConfigField "boolean", "USE_CANARY", "false"//关闭内存检测
+            minifyEnabled true//开启混淆
+            shrinkResources true//删除无效的Resource
+            zipAlignEnabled true//混淆后的zip优化
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    lintOptions {//lint检查
+        disable 'InvalidPackage'//忽略检测无效包，也可以使用warning 'InvalidPackage'用警告代替报错
+        disable "ResourceType"//忽略检测资源类型不匹配
+        abortOnError false//报错不中断build
     }
 }
 
@@ -34,14 +53,11 @@ buildscript {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile rootProject.ext.dependencies["junit"]
-    compile rootProject.ext.dependencies["support-v4"]
-    compile rootProject.ext.dependencies["gson"]
-    compile rootProject.ext.dependencies["appcompat-v7"]
-    compile rootProject.ext.dependencies["cardview-v7"]
-    compile rootProject.ext.dependencies["autolayout"]
-    compile rootProject.ext.dependencies["butterknife"]
-    compile rootProject.ext.dependencies["androideventbus"]
     apt rootProject.ext.dependencies["dagger2-apt-compiler"]//依赖apt插件
     provided rootProject.ext.dependencies["javax.annotation"]//dagger2必须依赖jsr250 annotation
+    apt rootProject.ext.dependencies["butterknife-apt"]
     compile project(':arms')
+    debugCompile rootProject.ext.dependencies["canary-debug"]
+    releaseCompile rootProject.ext.dependencies["canary-release"]
+    testCompile rootProject.ext.dependencies["canary-release"]
 }
