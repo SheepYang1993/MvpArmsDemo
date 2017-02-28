@@ -54,7 +54,6 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile rootProject.ext.dependencies["junit"]
     androidTestCompile(rootProject.ext.dependencies["espresso-core"], {
-        exclude module: 'support-annotations'
         exclude group: 'com.google.code.findbugs'
     })
     apt rootProject.ext.dependencies["dagger2-apt-compiler"]//依赖apt插件
