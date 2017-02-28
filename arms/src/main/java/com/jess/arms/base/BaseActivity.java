@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.jess.arms.R;
 import com.jess.arms.mvp.Presenter;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.zhy.autolayout.AutoFrameLayout;
@@ -61,11 +62,18 @@ public abstract class BaseActivity<P extends Presenter> extends RxAppCompatActiv
         mApplication = (BaseApplication) getApplication();
         if (useEventBus())//如果要使用eventbus请将此方法返回true
             EventBus.getDefault().register(this);//注册到事件主线
+        if (isFullScreen()) {
+            setTheme(R.style.AppTheme_NoActionBar_FullScreen);
+        }
         setContentView(initView());
         //绑定到butterknife
         mUnbinder = ButterKnife.bind(this);
         ComponentInject();//依赖注入
         initData();
+    }
+
+    protected boolean isFullScreen() {
+        return false;
     }
 
     /**

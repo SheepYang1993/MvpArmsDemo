@@ -6,7 +6,6 @@ import android.content.Intent;
  * Created by jess on 16/4/22.
  */
 public interface BaseView {
-
     /**
      * 显示加载
      */
@@ -26,6 +25,7 @@ public interface BaseView {
      * 跳转activity
      */
     void launchActivity(Intent intent);
+
     /**
      * 杀死自己
      */

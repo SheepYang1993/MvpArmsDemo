@@ -27,7 +27,8 @@
             android:name="com.jess.arms.widget.imageloader.glide.GlideConfiguration"
             android:value="GlideModule" />
 
-        <activity android:name=".mvp.ui.activity.SplashActivity">
+        <activity android:name=".mvp.ui.activity.SplashActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
