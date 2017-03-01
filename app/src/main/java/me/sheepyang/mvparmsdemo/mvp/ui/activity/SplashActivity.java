@@ -93,8 +93,8 @@ public class SplashActivity extends WEActivity<SplashPresenter> implements Splas
 
     @Override
     public void toLogin() {
-//        startActivity(new Intent(this, HomePageActivity.class));
-//        finish();
+        startActivity(new Intent(this, LoginActivity.class));
+        finish();
     }
 
     @Override

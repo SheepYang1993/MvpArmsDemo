@@ -11,20 +11,27 @@ import javax.inject.Singleton;
  */
 @Singleton
 public class ServiceManager implements BaseServiceManager {
+    private LoginService mLoginService;
     private CommonService mCommonService;
 
     /**
      * 如果需要添加service只需在构造方法中添加对应的service,在提供get方法返回出去,只要在ServiceModule提供了该service
      * Dagger2会自行注入
+     *
      * @param commonService
      */
-    @Inject public ServiceManager(CommonService commonService/*, UserService userService*/){
+    @Inject
+    public ServiceManager(CommonService commonService, LoginService loginService) {
         this.mCommonService = commonService;
-//        this.mUserService = userService;
+        this.mLoginService = loginService;
     }
 
     public CommonService getCommonService() {
         return mCommonService;
+    }
+
+    public LoginService getLoginService() {
+        return mLoginService;
     }
 
     /**

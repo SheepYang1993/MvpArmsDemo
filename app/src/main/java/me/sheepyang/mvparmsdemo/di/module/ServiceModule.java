@@ -6,6 +6,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import me.sheepyang.mvparmsdemo.mvp.model.api.service.CommonService;
+import me.sheepyang.mvparmsdemo.mvp.model.api.service.LoginService;
 import retrofit2.Retrofit;
 
 /**
@@ -18,6 +19,12 @@ public class ServiceModule {
     @Provides
     CommonService provideCommonService(Retrofit retrofit) {
         return retrofit.create(CommonService.class);
+    }
+
+    @Singleton
+    @Provides
+    LoginService provideLoginService(Retrofit retrofit) {
+        return retrofit.create(LoginService.class);
     }
 
 }

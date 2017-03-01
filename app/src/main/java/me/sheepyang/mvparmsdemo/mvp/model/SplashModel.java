@@ -4,20 +4,16 @@ import android.app.Application;
 
 import com.google.gson.Gson;
 import com.jess.arms.di.scope.ActivityScope;
-import com.jess.arms.http.cookie.store.CookieStore;
 import com.jess.arms.mvp.BaseModel;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-import common.WEApplication;
 import me.sheepyang.mvparmsdemo.mvp.contract.SplashContract;
-import me.sheepyang.mvparmsdemo.mvp.model.api.Api;
 import me.sheepyang.mvparmsdemo.mvp.model.api.cache.CacheManager;
 import me.sheepyang.mvparmsdemo.mvp.model.api.service.ServiceManager;
 import okhttp3.Cookie;
-import okhttp3.HttpUrl;
 
 
 /**
@@ -54,10 +50,10 @@ public class SplashModel extends BaseModel<ServiceManager, CacheManager> impleme
 
     @Override
     public List<Cookie> getCookies() {
-        //一般手动取出cookie的目的只是交给 webview 等等，非必要情况不要自己操作
-        CookieStore cookieStore = ((WEApplication) mApplication).getAppComponent().cookieJarImpl().getCookieStore();
-        HttpUrl httpUrl = HttpUrl.parse(Api.APP_DOMAIN);
-        return cookieStore.getCookie(httpUrl);
+//        //一般手动取出cookie的目的只是交给 webview 等等，非必要情况不要自己操作
+//        CookieStore cookieStore = ((WEApplication) mApplication).getAppComponent().cookieJarImpl().getCookieStore();
+//        HttpUrl httpUrl = HttpUrl.parse(Api.APP_DOMAIN);
+        return null;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package common;
 
 import android.app.Application;
+import android.app.Dialog;
 
 import com.google.gson.Gson;
 import com.jess.arms.base.AppManager;
@@ -8,7 +9,6 @@ import com.jess.arms.di.module.AppModule;
 import com.jess.arms.di.module.ClientModule;
 import com.jess.arms.di.module.GlobeConfigModule;
 import com.jess.arms.di.module.ImageModule;
-import com.jess.arms.http.cookie.CookieJarImpl;
 import com.jess.arms.widget.imageloader.ImageLoader;
 
 import javax.inject.Singleton;
@@ -42,7 +42,6 @@ public interface AppComponent {
 
     OkHttpClient okHttpClient();
 
-    CookieJarImpl cookieJarImpl();
 
     //图片管理器,用于加载图片的管理类,默认使用glide,使用策略模式,可替换框架
     ImageLoader imageLoader();
@@ -52,4 +51,6 @@ public interface AppComponent {
 
     //用于管理所有activity
     AppManager appManager();
+
+    Dialog dialog();
 }

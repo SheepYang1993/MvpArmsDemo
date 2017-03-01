@@ -5,6 +5,11 @@ package me.sheepyang.mvparmsdemo.mvp.model.api;
  * contact with jess.yan.effort@gmail.com
  */
 public interface Api {
-    String APP_DOMAIN = "https://api.github.com";
-//    String RequestSuccess = "0";
+    String APP_DOMAIN = "http://116.62.100.238/keaixue-api/";
+    String RequestSuccess = "200";
+
+    /**
+     * 登陆
+     */
+    String LOGIN = "api/user/logon.json";
 }

@@ -4,8 +4,6 @@ import android.app.Application;
 
 import com.jess.arms.base.AppManager;
 import com.jess.arms.http.RequestIntercept;
-import com.jess.arms.http.cookie.CookieJarImpl;
-import com.jess.arms.http.cookie.store.PersistentCookieStore;
 import com.jess.arms.utils.DataHelper;
 
 import java.io.File;
@@ -69,12 +67,11 @@ public class ClientModule {
      */
     @Singleton
     @Provides
-    OkHttpClient provideClient(OkHttpClient.Builder okHttpClient, CookieJarImpl cookieJar, Interceptor intercept
+    OkHttpClient provideClient(OkHttpClient.Builder okHttpClient, Interceptor intercept
             , List<Interceptor> interceptors) {
         OkHttpClient.Builder builder = okHttpClient
                 .connectTimeout(TIME_OUT, TimeUnit.SECONDS)
                 .readTimeout(TIME_OUT, TimeUnit.SECONDS)
-                .cookieJar(cookieJar)//cookie持久化存储，如果cookie不过期，则一直有效
                 .addNetworkInterceptor(intercept);
         if (interceptors != null && interceptors.size() > 0) {//如果外部提供了interceptor的数组则遍历添加
             for (Interceptor interceptor : interceptors) {
@@ -83,29 +80,6 @@ public class ClientModule {
         }
         return builder
                 .build();
-    }
-
-    /**
-     * 提供CookieJarImpl
-     *
-     * @param cookieStore
-     * @return
-     */
-    @Singleton
-    @Provides
-    CookieJarImpl provideCookieJarImpl(PersistentCookieStore cookieStore) {
-        return new CookieJarImpl(cookieStore);
-    }
-
-    /**
-     * 提供PersistentCookieStore
-     *
-     * @return
-     */
-    @Singleton
-    @Provides
-    PersistentCookieStore providePersistentCookieStore() {
-        return new PersistentCookieStore();//cookie持久化存储，如果cookie不过期，则一直有效
     }
 
     @Singleton
