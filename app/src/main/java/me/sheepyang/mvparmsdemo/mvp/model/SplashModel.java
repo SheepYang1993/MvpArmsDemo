@@ -10,10 +10,14 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import common.WEApplication;
+import me.sheepyang.mvparmsdemo.app.utils.MyUtils;
 import me.sheepyang.mvparmsdemo.mvp.contract.SplashContract;
+import me.sheepyang.mvparmsdemo.mvp.model.api.Api;
 import me.sheepyang.mvparmsdemo.mvp.model.api.cache.CacheManager;
 import me.sheepyang.mvparmsdemo.mvp.model.api.service.ServiceManager;
 import okhttp3.Cookie;
+import timber.log.Timber;
 
 
 /**
@@ -49,18 +53,13 @@ public class SplashModel extends BaseModel<ServiceManager, CacheManager> impleme
     }
 
     @Override
-    public List<Cookie> getCookies() {
-//        //一般手动取出cookie的目的只是交给 webview 等等，非必要情况不要自己操作
-//        CookieStore cookieStore = ((WEApplication) mApplication).getAppComponent().cookieJarImpl().getCookieStore();
-//        HttpUrl httpUrl = HttpUrl.parse(Api.APP_DOMAIN);
-        return null;
-    }
-
-    @Override
     public boolean isLogin() {
-        List<Cookie> cookies = getCookies();
+        List<Cookie> cookies = MyUtils.getCookies(Api.APP_DOMAIN, ((WEApplication) mApplication).getAppComponent().cookieStore());
         // 是否含有登陆cookies信息，判断是否需要登陆
         if (cookies != null && cookies.size() > 0) {
+            for (Cookie cookie : cookies) {
+                Timber.tag("SheepYang").i("cookie:" + cookie);
+            }
             return true;
         } else {
             return false;

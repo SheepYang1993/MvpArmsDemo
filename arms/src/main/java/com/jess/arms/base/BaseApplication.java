@@ -46,7 +46,7 @@ public abstract class BaseApplication extends Application {
                 .build()
                 .inject(this);
         this.mImagerModule = new ImageModule();//图片加载框架默认使用glide
-        this.mClientModule = new ClientModule(mAppManager);//用于提供okhttp和retrofit的单例
+        this.mClientModule = new ClientModule(mAppManager, mApplication);//用于提供okhttp和retrofit的单例
         this.mGlobeConfigModule = checkNotNull(getGlobeConfigModule(), "lobeConfigModule is required");
         registerActivityLifecycleCallbacks(mActivityLifecycle);
     }

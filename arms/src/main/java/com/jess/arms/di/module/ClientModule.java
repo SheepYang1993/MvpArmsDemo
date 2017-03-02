@@ -1,9 +1,13 @@
 package com.jess.arms.di.module;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.jess.arms.base.AppManager;
 import com.jess.arms.http.RequestIntercept;
+import com.jess.arms.http.cookie.CookieJarImpl;
+import com.jess.arms.http.cookie.store.CookieStore;
+import com.jess.arms.http.cookie.store.PersistentCookieStore;
 import com.jess.arms.utils.DataHelper;
 
 import java.io.File;
@@ -19,6 +23,7 @@ import io.rx_cache.internal.RxCache;
 import io.victoralbertos.jolyglot.GsonSpeaker;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.listener.ResponseErroListener;
+import okhttp3.CookieJar;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -32,11 +37,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module
 public class ClientModule {
     private static final int TIME_OUT = 10;
+    private Context mContext;
     private AppManager mAppManager;
 
 
-    public ClientModule(AppManager appManager) {
+    public ClientModule(AppManager appManager, Context context) {
         this.mAppManager = appManager;
+        this.mContext = context;
     }
 
     /**
@@ -63,15 +70,17 @@ public class ClientModule {
      * 提供OkhttpClient
      *
      * @param okHttpClient
+     * @param cookieJar
      * @return
      */
     @Singleton
     @Provides
     OkHttpClient provideClient(OkHttpClient.Builder okHttpClient, Interceptor intercept
-            , List<Interceptor> interceptors) {
+            , List<Interceptor> interceptors, CookieJar cookieJar) {
         OkHttpClient.Builder builder = okHttpClient
                 .connectTimeout(TIME_OUT, TimeUnit.SECONDS)
                 .readTimeout(TIME_OUT, TimeUnit.SECONDS)
+                .cookieJar(cookieJar)
                 .addNetworkInterceptor(intercept);
         if (interceptors != null && interceptors.size() > 0) {//如果外部提供了interceptor的数组则遍历添加
             for (Interceptor interceptor : interceptors) {
@@ -80,6 +89,24 @@ public class ClientModule {
         }
         return builder
                 .build();
+    }
+
+    @Singleton
+    @Provides
+    CookieJar provideCookieJar(CookieStore cookieStore) {
+        return new CookieJarImpl(cookieStore);
+    }
+
+    @Singleton
+    @Provides
+    CookieStore provideCookieStore(Context context) {
+        return new PersistentCookieStore(context);
+    }
+
+    @Singleton
+    @Provides
+    Context provideContext() {
+        return mContext;
     }
 
     @Singleton
