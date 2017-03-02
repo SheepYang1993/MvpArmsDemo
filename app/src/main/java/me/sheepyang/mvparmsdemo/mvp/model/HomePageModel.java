@@ -1,23 +1,16 @@
 package me.sheepyang.mvparmsdemo.mvp.model;
 
 import android.app.Application;
-import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.mvp.BaseModel;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
-import common.WEApplication;
-import me.sheepyang.mvparmsdemo.app.utils.MyUtils;
-import me.sheepyang.mvparmsdemo.mvp.contract.SplashContract;
-import me.sheepyang.mvparmsdemo.mvp.model.api.Api;
+import me.sheepyang.mvparmsdemo.mvp.contract.HomePageContract;
 import me.sheepyang.mvparmsdemo.mvp.model.api.cache.CacheManager;
 import me.sheepyang.mvparmsdemo.mvp.model.api.service.ServiceManager;
-import okhttp3.Cookie;
 
 
 /**
@@ -30,16 +23,16 @@ import okhttp3.Cookie;
  */
 
 /**
- * Created by SheepYang on 2017/2/28.
+ * Created by SheepYang on 2017/3/2.
  */
 
 @ActivityScope
-public class SplashModel extends BaseModel<ServiceManager, CacheManager> implements SplashContract.Model {
+public class HomePageModel extends BaseModel<ServiceManager, CacheManager> implements HomePageContract.Model {
     private Gson mGson;
     private Application mApplication;
 
     @Inject
-    public SplashModel(ServiceManager serviceManager, CacheManager cacheManager, Gson gson, Application application) {
+    public HomePageModel(ServiceManager serviceManager, CacheManager cacheManager, Gson gson, Application application) {
         super(serviceManager, cacheManager);
         this.mGson = gson;
         this.mApplication = application;
@@ -52,28 +45,4 @@ public class SplashModel extends BaseModel<ServiceManager, CacheManager> impleme
         this.mApplication = null;
     }
 
-    @Override
-    public boolean isLogin() {
-        boolean isLogin = false;
-        List<Cookie> cookies = MyUtils.getCookies(Api.APP_DOMAIN, ((WEApplication) mApplication).getAppComponent().cookieStore());
-        // 是否含有登陆cookies信息，判断是否需要登陆
-        if (cookies != null && cookies.size() > 0) {
-            for (Cookie cookie : cookies) {
-                if ("JSESSIONID".equals(cookie.name()) && !TextUtils.isEmpty(cookie.value())) {
-                    isLogin = true;
-                }
-            }
-        }
-        return isLogin;
-    }
-
-    @Override
-    public long getDelayedTime() {
-        return 1000;
-    }
-
-    @Override
-    public int getSplashDrawableResource() {
-        return -1;
-    }
 }

@@ -1,7 +1,6 @@
 package me.sheepyang.mvparmsdemo.mvp.ui.activity;
 
 import android.content.Intent;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,10 +10,9 @@ import com.jess.arms.utils.UiUtils;
 import common.AppComponent;
 import common.WEActivity;
 import me.sheepyang.mvparmsdemo.R;
-import me.sheepyang.mvparmsdemo.di.component.DaggerSplashComponent;
-import me.sheepyang.mvparmsdemo.di.module.SplashModule;
-import me.sheepyang.mvparmsdemo.mvp.contract.SplashContract;
-import me.sheepyang.mvparmsdemo.mvp.presenter.SplashPresenter;
+import me.sheepyang.mvparmsdemo.di.module.HomePageModule;
+import me.sheepyang.mvparmsdemo.mvp.contract.HomePageContract;
+import me.sheepyang.mvparmsdemo.mvp.presenter.HomePagePresenter;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
@@ -28,36 +26,32 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
  */
 
 /**
- * Created by SheepYang on 2017/2/28.
+ * Created by SheepYang on 2017/3/2.
  */
 
-public class SplashActivity extends WEActivity<SplashPresenter> implements SplashContract.View {
+public class HomePageActivity extends WEActivity<HomePagePresenter> implements HomePageContract.View {
+
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
-        DaggerSplashComponent
+        DaggerHomePageComponent
                 .builder()
                 .appComponent(appComponent)
-                .splashModule(new SplashModule(this)) //请将SplashModule()第一个首字母改为小写
+                .HomePageModule(new HomePageModule(this)) //请将HomePageModule()第一个首字母改为小写
                 .build()
                 .inject(this);
     }
 
     @Override
     protected View initView() {
-        return LayoutInflater.from(this).inflate(R.layout.activity_splash, null, false);
-    }
-
-    @Override
-    protected boolean isFullScreen() {
-        return true;
+        return LayoutInflater.from(this).inflate(R.layout.activity_home_page, null, false);
     }
 
     @Override
     protected void initData() {
-        mPresenter.setSplashDrawableResource();
-        mPresenter.nextActivity();
+
     }
+
 
     @Override
     public void showLoading() {
@@ -86,20 +80,5 @@ public class SplashActivity extends WEActivity<SplashPresenter> implements Splas
         finish();
     }
 
-    @Override
-    public void setSplashDrawableResource(@DrawableRes int drableId) {
 
-    }
-
-    @Override
-    public void toLogin() {
-        startActivity(new Intent(this, LoginActivity.class));
-        finish();
-    }
-
-    @Override
-    public void toHomePage() {
-        startActivity(new Intent(this, LoginActivity.class));
-        finish();
-    }
 }
