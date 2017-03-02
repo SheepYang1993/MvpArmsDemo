@@ -1,7 +1,6 @@
 package common;
 
 import android.app.Application;
-import android.app.Dialog;
 
 import com.google.gson.Gson;
 import com.jess.arms.base.AppManager;
@@ -51,6 +50,4 @@ public interface AppComponent {
 
     //用于管理所有activity
     AppManager appManager();
-
-    Dialog dialog();
 }
