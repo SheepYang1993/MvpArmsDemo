@@ -1,8 +1,6 @@
 package me.sheepyang.mvparmsdemo.mvp.presenter;
 
 import android.app.Application;
-import android.content.Context;
-import android.text.TextUtils;
 
 import com.jess.arms.base.AppManager;
 import com.jess.arms.di.scope.ActivityScope;
@@ -14,14 +12,11 @@ import java.net.ConnectException;
 
 import javax.inject.Inject;
 
-import common.WEApplication;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 import me.sheepyang.mvparmsdemo.R;
-import me.sheepyang.mvparmsdemo.app.utils.AppUtils;
-import me.sheepyang.mvparmsdemo.mvp.contract.LoginContract;
+import me.sheepyang.mvparmsdemo.mvp.contract.ContactContract;
 import me.sheepyang.mvparmsdemo.mvp.model.entity.BaseJson;
-import me.sheepyang.mvparmsdemo.mvp.model.entity.Login;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
 import rx.schedulers.Schedulers;
@@ -38,18 +33,18 @@ import rx.schedulers.Schedulers;
 
 
 /**
- * Created by SheepYang on 2017/3/1.
+ * Created by SheepYang on 2017/3/3.
  */
 
 @ActivityScope
-public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginContract.View> {
+public class ContactPresenter extends BasePresenter<ContactContract.Model, ContactContract.View> {
     private RxErrorHandler mErrorHandler;
     private Application mApplication;
     private ImageLoader mImageLoader;
     private AppManager mAppManager;
 
     @Inject
-    public LoginPresenter(LoginContract.Model model, LoginContract.View rootView
+    public ContactPresenter(ContactContract.Model model, ContactContract.View rootView
             , RxErrorHandler handler, Application application
             , ImageLoader imageLoader, AppManager appManager) {
         super(model, rootView);
@@ -68,23 +63,9 @@ public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginCont
         this.mApplication = null;
     }
 
-    public void requestLogin(String account, String passwd) {
-        mRootView.closeSoftKeyboard();
-        if (!AppUtils.isNetworkAvailable((Context) mRootView)) {
-            mRootView.showMessage(mApplication.getString(R.string.connect_exception));
-            return;
-        }
-        if (TextUtils.isEmpty(account)) {
-            mRootView.showMessage(mApplication.getString(R.string.input_account));
-            return;
-        }
-        if (TextUtils.isEmpty(passwd)) {
-            mRootView.showMessage(mApplication.getString(R.string.input_passwd));
-            return;
-        }
-        mModel.login(account, passwd)
+    public void getData() {
+        mModel.getContactList()
                 .subscribeOn(Schedulers.io())
-//                .retryWhen(new RetryWithDelay(3, 2))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
                 .doOnSubscribe(new Action0() {
                     @Override
                     public void call() {
@@ -98,13 +79,12 @@ public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginCont
                         mRootView.hideLoading();//隐藏上拉刷新的进度条
                     }
                 })
-                .compose(RxUtils.<BaseJson<Login>>bindToLifecycle(mRootView))//使用RXlifecycle,使subscription和activity一起销毁
-                .subscribe(new ErrorHandleSubscriber<BaseJson<Login>>(mErrorHandler) {
+                .compose(RxUtils.<BaseJson>bindToLifecycle(mRootView))//使用RXlifecycle,使subscription和activity一起销毁
+                .subscribe(new ErrorHandleSubscriber<BaseJson>(mErrorHandler) {
                     @Override
-                    public void onNext(BaseJson<Login> result) {
+                    public void onNext(BaseJson result) {
                         if (result.isSuccess(true)) {
-                            WEApplication.setLoginInfo(result.getData());
-                            mRootView.toHomePage();
+
                         }
                     }
 

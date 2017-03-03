@@ -57,6 +57,7 @@ public class LoginActivity extends WEActivity<LoginPresenter> implements LoginCo
     TextView tvLogin;
     @Inject
     Dialog mProgressDialog;
+    private long mCurrentTime;
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
@@ -148,7 +149,8 @@ public class LoginActivity extends WEActivity<LoginPresenter> implements LoginCo
 
     @Override
     public void toHomePage() {
-
+        startActivity(new Intent(this, HomePageActivity.class));
+        finish();
     }
 
     @Override
@@ -161,14 +163,21 @@ public class LoginActivity extends WEActivity<LoginPresenter> implements LoginCo
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_login:
-                toLogin();
+                mPresenter.requestLogin(edtAccount.getText().toString().trim(), edtPassword.getText().toString().trim());
                 break;
             default:
                 break;
         }
     }
 
-    private void toLogin() {
-        mPresenter.requestLogin(edtAccount.getText().toString().trim(), edtPassword.getText().toString().trim());
+    @Override
+    public void onBackPressed() {
+        if (System.currentTimeMillis() - mCurrentTime < 2000) {
+            mCurrentTime = 0;
+            mApplication.getAppManager().AppExit();
+        } else {
+            mCurrentTime = System.currentTimeMillis();
+            showMessage("再次点击退出APP");
+        }
     }
 }

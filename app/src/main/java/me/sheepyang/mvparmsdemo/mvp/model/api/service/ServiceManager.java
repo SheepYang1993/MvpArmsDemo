@@ -11,8 +11,8 @@ import javax.inject.Singleton;
  */
 @Singleton
 public class ServiceManager implements BaseServiceManager {
-    private LoginService mLoginService;
     private CommonService mCommonService;
+    private KeAiService mKeAiService;
 
     /**
      * 如果需要添加service只需在构造方法中添加对应的service,在提供get方法返回出去,只要在ServiceModule提供了该service
@@ -21,17 +21,17 @@ public class ServiceManager implements BaseServiceManager {
      * @param commonService
      */
     @Inject
-    public ServiceManager(CommonService commonService, LoginService loginService) {
+    public ServiceManager(CommonService commonService, KeAiService keAiService) {
         this.mCommonService = commonService;
-        this.mLoginService = loginService;
+        this.mKeAiService = keAiService;
     }
 
     public CommonService getCommonService() {
         return mCommonService;
     }
 
-    public LoginService getLoginService() {
-        return mLoginService;
+    public KeAiService getKeAiService() {
+        return mKeAiService;
     }
 
     /**

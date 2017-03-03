@@ -1,86 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/green"
-    android:orientation="vertical">
-
-    <ImageView
-        android:id="@+id/bar_back"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:src="@drawable/arrow_white_left" />
-
-    <TextView
-        android:id="@+id/bar_title"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="60dp"
-        android:layout_marginRight="60dp"
-        android:ellipsize="marquee"
-        android:gravity="center"
-        android:marqueeRepeatLimit="marquee_forever"
-        android:singleLine="true"
-        android:text="@string/app_name"
-        android:textColor="@color/white"
-        android:textSize="17sp" />
-
-    <LinearLayout
-        android:id="@+id/ll_title_select"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginLeft="60dp"
-        android:layout_marginRight="60dp"
-        android:orientation="horizontal"
-        android:visibility="gone">
-
-        <TextView
-            android:id="@+id/tv_select_left"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/switch_button_left_selector"
-            android:textColor="@drawable/switch_button_text_selector"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/tv_select_right"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/switch_button_right_selector"
-            android:textColor="@drawable/switch_button_text_selector"
-            android:textSize="14sp" />
-    </LinearLayout>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:tl="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
-        android:id="@+id/bar_right_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_alignParentRight="true">
-
-        <TextView
-            android:id="@+id/bar_right_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:text="确定"
-            android:textColor="@color/white"
-            android:textSize="17sp"
-            android:visibility="gone" />
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/green">
 
         <ImageView
-            android:id="@+id/bar_right_iv"
+            android:id="@+id/iv_left_icon"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:src="@drawable/arrow_white_left"
-            android:visibility="gone" />
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:src="@drawable/arrow_white_left"/>
 
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="100dp"
+            android:ellipsize="marquee"
+            android:hint="标题"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:singleLine="true"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textSize="17sp"
+            android:visibility="gone"/>
+
+        <com.flyco.tablayout.SegmentTabLayout
+            android:id="@+id/segment_tab_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            tl:tl_bar_color="@color/green"
+            tl:tl_indicator_color="@color/white"
+            tl:tl_indicator_corner_radius="5dp"
+            tl:tl_tab_padding="8dp"/>
+
+        <ImageView
+            android:id="@+id/iv_right_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_margin="15dp"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/tv_right_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_margin="15dp"
+            android:hint="提示"
+            android:singleLine="true"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textSize="14sp"
+            android:visibility="gone"/>
     </RelativeLayout>
-
-</RelativeLayout>
+</merge>

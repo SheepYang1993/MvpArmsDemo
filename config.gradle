@@ -60,7 +60,15 @@ ext {
             "mockito-core"             : "org.mockito:mockito-core:1.+",
             "timber"                   : "com.jakewharton.timber:timber:4.5.1",
             "canary-debug"             : "com.squareup.leakcanary:leakcanary-android:1.4-beta2",
-            "canary-release"           : "com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2"
+            "canary-release"           : "com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2",
+
+            //mine
+            "flyco-tablayout"          : "com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar",
+            // 刷新组件
+            "tkrefreshlayout"          : "com.lcodecorex:tkrefreshlayout:1.0.5",
+            // 索引bar
+            "indexablerecyclerview"    : "me.yokeyword:indexablerecyclerview:1.1.0",
+            "hawk"                     : "com.github.orhanobut:hawk:1.23"
     ]
 
 

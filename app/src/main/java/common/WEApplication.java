@@ -5,14 +5,17 @@ import android.content.Context;
 import com.jess.arms.base.BaseApplication;
 import com.jess.arms.di.module.GlobeConfigModule;
 import com.jess.arms.http.GlobeHttpHandler;
+import com.orhanobut.hawk.Hawk;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
 import me.jessyan.rxerrorhandler.handler.listener.ResponseErroListener;
 import me.sheepyang.mvparmsdemo.BuildConfig;
+import me.sheepyang.mvparmsdemo.app.utils.Contacts;
 import me.sheepyang.mvparmsdemo.di.module.CacheModule;
 import me.sheepyang.mvparmsdemo.di.module.ServiceModule;
 import me.sheepyang.mvparmsdemo.mvp.model.api.Api;
+import me.sheepyang.mvparmsdemo.mvp.model.entity.Login;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -87,6 +90,7 @@ public class WEApplication extends BaseApplication {
 
     /**
      * app的全局配置信息封装进module(使用Dagger注入到需要配置信息的地方)
+     *
      * @return
      */
     @Override
@@ -151,4 +155,11 @@ public class WEApplication extends BaseApplication {
                 }).build();
     }
 
+    public static void setLoginInfo(Login data) {
+        Hawk.put(Contacts.HAWK_LOGIN_INFO, data);
+    }
+
+    public static Login getLoginInfo() {
+        return Hawk.get(Contacts.HAWK_LOGIN_INFO);
+    }
 }

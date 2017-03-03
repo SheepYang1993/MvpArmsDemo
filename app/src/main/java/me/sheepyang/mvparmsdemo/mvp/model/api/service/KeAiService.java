@@ -12,8 +12,12 @@ import rx.Observable;
  * Created by SheepYang on 2017/3/1.
  */
 
-public interface LoginService {
+public interface KeAiService {
     @POST(Api.LOGIN)
     @FormUrlEncoded
     Observable<BaseJson<Login>> login(@Field("account") String account, @Field("passwd") String passwd);
+
+    @POST(Api.CUSTOMER_LIST)
+    @FormUrlEncoded
+    Observable<BaseJson> getContactList(@Field("storeId") String storeId, @Field("page") int page, @Field("rows") int rows);
 }

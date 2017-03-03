@@ -8,11 +8,11 @@ import com.jess.arms.mvp.BaseModel;
 
 import javax.inject.Inject;
 
-import me.sheepyang.mvparmsdemo.mvp.contract.LoginContract;
+import common.WEApplication;
+import me.sheepyang.mvparmsdemo.mvp.contract.ContactContract;
 import me.sheepyang.mvparmsdemo.mvp.model.api.cache.CacheManager;
 import me.sheepyang.mvparmsdemo.mvp.model.api.service.ServiceManager;
 import me.sheepyang.mvparmsdemo.mvp.model.entity.BaseJson;
-import me.sheepyang.mvparmsdemo.mvp.model.entity.Login;
 import rx.Observable;
 
 
@@ -26,16 +26,16 @@ import rx.Observable;
  */
 
 /**
- * Created by SheepYang on 2017/3/1.
+ * Created by SheepYang on 2017/3/3.
  */
 
 @ActivityScope
-public class LoginModel extends BaseModel<ServiceManager, CacheManager> implements LoginContract.Model {
+public class ContactModel extends BaseModel<ServiceManager, CacheManager> implements ContactContract.Model {
     private Gson mGson;
     private Application mApplication;
 
     @Inject
-    public LoginModel(ServiceManager serviceManager, CacheManager cacheManager, Gson gson, Application application) {
+    public ContactModel(ServiceManager serviceManager, CacheManager cacheManager, Gson gson, Application application) {
         super(serviceManager, cacheManager);
         this.mGson = gson;
         this.mApplication = application;
@@ -49,8 +49,7 @@ public class LoginModel extends BaseModel<ServiceManager, CacheManager> implemen
     }
 
     @Override
-    public Observable<BaseJson<Login>> login(String account, String passwd) {
-        return mServiceManager.getKeAiService()
-                .login(account, passwd);
+    public Observable<BaseJson> getContactList() {
+        return mServiceManager.getKeAiService().getContactList(WEApplication.getLoginInfo().getStore_id(), 1, 1000);
     }
 }

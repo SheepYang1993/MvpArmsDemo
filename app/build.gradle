@@ -56,11 +56,15 @@ dependencies {
     androidTestCompile(rootProject.ext.dependencies["espresso-core"], {
         exclude group: 'com.google.code.findbugs'
     })
+    compile project(':arms')
     apt rootProject.ext.dependencies["dagger2-apt-compiler"]//依赖apt插件
     provided rootProject.ext.dependencies["javax.annotation"]//dagger2必须依赖jsr250 annotation
     apt rootProject.ext.dependencies["butterknife-apt"]
     debugCompile rootProject.ext.dependencies["canary-debug"]
     releaseCompile rootProject.ext.dependencies["canary-release"]
     testCompile rootProject.ext.dependencies["canary-release"]
-    compile project(':arms')
+    compile rootProject.ext.dependencies["flyco-tablayout"]
+    compile rootProject.ext.dependencies["tkrefreshlayout"]
+    compile rootProject.ext.dependencies["indexablerecyclerview"]
+    compile rootProject.ext.dependencies["hawk"]
 }

@@ -12,4 +12,8 @@ public interface Api {
      * 登陆
      */
     String LOGIN = "api/user/logon.json";
+    /**
+     * 通讯录列表
+     */
+    String CUSTOMER_LIST = "api/customer/selectCustomerList.json";
 }

@@ -99,7 +99,7 @@ public class SplashActivity extends WEActivity<SplashPresenter> implements Splas
 
     @Override
     public void toHomePage() {
-        startActivity(new Intent(this, LoginActivity.class));
+        startActivity(new Intent(this, HomePageActivity.class));
         finish();
     }
 }
